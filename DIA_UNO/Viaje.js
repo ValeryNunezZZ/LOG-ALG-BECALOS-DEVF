@@ -12,14 +12,10 @@ class Viaje{
     }
 
     crearTarea(tarea) {
-        if(this.tareas.includes(tarea)){
-            alert("ya existe la tarea");
-        }else{
-            this.tareas.push(tarea);
-        }
+        this.tareas.push(tarea);
     }
 
-    eliminarTarea(tarea){
+    eliminarTarea(tarea, ){
         let i = this.tareas.indexOf(tarea);
         this.tareas.splice(i,1);
     }
@@ -66,10 +62,15 @@ function addViaje(){
 
     select.innerHTML = "";
 
+    let numOp = 0;
+
     objetos.forEach(o => {
         let option = document.createElement('option');
+        option.value = numOp;
+        //alert(numOp);
         option.innerHTML = `${o.nombre}`;
         select.appendChild(option);
+        numOp++;
     });
 
 
@@ -117,12 +118,15 @@ function eliminarDiv(){
         let select = document.querySelector(".nombreViaje");
     
         select.innerHTML = "";
-    
+        let numOp = 0;
+
         objetos.forEach(o => {
             let option = document.createElement('option');
-            option.value = o.nombre;
+            option.value = numOp;
+            //alert(numOp);
             option.innerHTML = `${o.nombre}`;
             select.appendChild(option);
+            numOp++;
         });
     
     }
@@ -144,33 +148,47 @@ agregarTarea.addEventListener("click", ()=>{
         return;
     }
 
-    let objetoSeleccionado = this;
-    objetoSeleccionado.crearTarea(option);
-
-    let select = document.querySelector(".nombreViaje");
+    //alert(option);
+    objetos[option].crearTarea(nombreTarea);
 
     nombreTarea.value = "";
-    escribirTareas(objetoSeleccionado);
-
+    escribirTareas(option);
 
 })
 
-function escribirTareas(objetoSeleccionado){
+function escribirTareas(option){
 
     let listaTareas = document.getElementById('lista-tareas');
-
-    listaTareas.innerHTML = `<h3 id="test">Tareas de: ${objetoSeleccionado.nombre}</h3>`;
     
-    objetoSeleccionado.tareas.forEach(o => {
-        let miniD = document.createElement('div');
+    listaTareas.innerHTML = "";
 
-        miniD.className = 'viaje-card';
+    objetos.forEach(Obj => {
 
-        miniD.innerHTML = `
-        <p>Nombre: ${objetos[objetos.length-1].origen}</p>
-        <button onclick="" class="danger-button">Eliminar Tarea</button>
-        `;
-        listaTareas.appendChild(option);
-    });
+        Obj.tareas.forEach(o => {
+            let miniD = document.createElement('div');
+    
+            miniD.className = 'viaje-card';
+    
+            miniD.innerHTML = `
+            <h4 id="test">Tareas de: ${Obj.nombre}</h4>
+            <p>Nombre: ${o}</p>
+            <button onclick="eliminarHomework(${option})" class="danger-button">Eliminar Tarea</button>
+            `;
+    
+            listaTareas.appendChild(miniD);
+        });
 
+    })
 }
+
+
+
+function eliminarHomework(option){
+    objetos[option].eliminarTarea(objetos[option].nombre);
+    
+    escribirTareas(option);
+    
+}
+
+//elimininar tarea
+//y actualizar lo de tareas cuando elimino objeto
