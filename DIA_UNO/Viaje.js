@@ -128,7 +128,12 @@ function eliminarDiv(){
             select.appendChild(option);
             numOp++;
         });
-    
+
+        objetos.forEach((o)=>{
+            alert(o.nombre)
+        })
+
+        escribirTareas();
     }
 }
 
@@ -182,12 +187,10 @@ function escribirTareas(option){
 }
 
 
-
 function eliminarHomework(option){
     objetos[option].eliminarTarea(objetos[option].nombre);
     
-    escribirTareas(option);
-    
+    escribirTareas(option); 
 }
 
 //elimininar tarea
