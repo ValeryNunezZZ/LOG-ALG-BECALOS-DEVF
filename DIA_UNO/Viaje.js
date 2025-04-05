@@ -15,7 +15,7 @@ class Viaje{
         this.tareas.push(tarea);
     }
 
-    eliminarTarea(tarea, ){
+    eliminarTarea(tarea){
         let i = this.tareas.indexOf(tarea);
         this.tareas.splice(i,1);
     }
@@ -110,8 +110,19 @@ let agregar = false;
 
 function eliminarDiv(){
     if(eliminar){
-        let name = this;
-        let i = objetos.shift(objetos.indexOf(this),1);
+        let p = 0;
+        let posicionCorrecta;
+
+        let nombreEliminar = prompt("Nombre: ")
+
+        objetos.forEach(o=>{
+            if(o.nombre == nombreEliminar){
+                posicionCorrecta = p;
+            }
+            p++;
+        })
+        alert(`posicion : ${posicionCorrecta}`)
+        let i = objetos.shift(posicionCorrecta,1);
         this.remove();
         eliminar = false;
 
@@ -153,22 +164,24 @@ agregarTarea.addEventListener("click", ()=>{
         return;
     }
 
-    //alert(option);
+    alert(objetos[option].nombre);
     objetos[option].crearTarea(nombreTarea);
 
     nombreTarea.value = "";
-    escribirTareas(option);
+    
+    escribirTareas();
 
 })
 
-function escribirTareas(option){
+function escribirTareas(){
 
+    let option = document.querySelector(".nombreViaje").value;
     let listaTareas = document.getElementById('lista-tareas');
     
     listaTareas.innerHTML = "";
 
     objetos.forEach(Obj => {
-
+        
         Obj.tareas.forEach(o => {
             let miniD = document.createElement('div');
     
@@ -177,8 +190,10 @@ function escribirTareas(option){
             miniD.innerHTML = `
             <h4 id="test">Tareas de: ${Obj.nombre}</h4>
             <p>Nombre: ${o}</p>
-            <button onclick="eliminarHomework(${option})" class="danger-button">Eliminar Tarea</button>
+            <button onclick="eliminarHomework()" class="danger-button">Eliminar Tarea</button>
             `;
+
+            miniD.onclick = eliminarDivTarea;
     
             listaTareas.appendChild(miniD);
         });
@@ -187,11 +202,47 @@ function escribirTareas(option){
 }
 
 
-function eliminarHomework(option){
-    objetos[option].eliminarTarea(objetos[option].nombre);
+let et = false;
+
+
+
+function eliminarHomework(){
     
-    escribirTareas(option); 
+    et = true;
+    eliminarDivTarea();
+    
 }
 
-//elimininar tarea
-//y actualizar lo de tareas cuando elimino objeto
+function eliminarDivTarea(){
+    if(et){
+        
+        let p = 0;
+        let posicionCorrecta;
+
+        let nombreEliminar = prompt("Nombre VIAJE: ")
+
+        objetos.forEach(o=>{
+            if(o.nombre == nombreEliminar){
+                posicionCorrecta = p;
+            }
+            p++;
+        })
+
+        let nombreTareEliminar = prompt("Nombre TAREA: ")
+        
+        //let i = objetos.shift(posicionCorrecta,1);
+        objetos[posicionCorrecta].tareas.forEach(o=>{
+            if(o == nombreTareEliminar){
+                posicionCorrecta = p;
+            }
+            p++;
+        })
+        //this.remove();
+
+        objetos[posicionCorrecta].eliminarTarea(posicionCorrecta);
+
+        eliminar = false;
+
+        escribirTareas();
+    }
+}
