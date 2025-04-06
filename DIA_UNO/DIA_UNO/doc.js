@@ -58,7 +58,7 @@ function cargarViajes(){
         //EXTRAER TAREAS
 
         const elementosTareas = objeto.listaTareas.map((tarea, indexTarea) =>
-            `<li>${tarea} <button onclick="eliminarTarea(${indice}, ${indexTarea})">Eliminar</button></li>`
+            `<li><span class="item_tarea">${tarea}</span> <button class="boton eliminarTarea" onclick="eliminarTarea(${indice}, ${indexTarea})">Eliminar</button></li>`
         ).join('');
 
 
@@ -67,17 +67,20 @@ function cargarViajes(){
 
         div.innerHTML = `
             <h3 id="test">${objeto.nombre}</h3>
-            <p>Origen: ${objeto.origen}</p>
+            <p><span class="labels">Origen</span> ${objeto.origen}</p>
 
-            <ul class="listaTareas">${elementosTareas}</ul>
+            <ul class="listaTareas flex">${elementosTareas}</ul>
 
-            <div >
-                <input type="text" class="campoTarea">
+            <div class="camposAgregarTarea">
+                <input type="text" class="campoTarea" placeholder="Nombre de tarea">
                 <button class="boton" onclick="anadirTarea(${indice})">Agregar Tarea</button>
             </div>
 
-            <button class="boton" onclick="eliminarViaje(${indice})">Eliminar Viaje</button>
+            <button class="boton eliminarViaje" onclick="eliminarViaje(${indice})">Eliminar Viaje</button>
         `;
+
+        div.className = 'flex';
+        div.className = 'viajeRegistrado';
 
         viajesContainer.appendChild(div);
 
