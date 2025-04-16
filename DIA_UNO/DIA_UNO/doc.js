@@ -16,7 +16,7 @@ class Viaje{
     }
 
     eliminarTarea(tarea){
-
+        this.listaTareas.shift(tarea);
     }
     
 }
@@ -62,7 +62,6 @@ function cargarViajes(){
         ).join('');
 
 
-        //
 
 
         div.innerHTML = `
@@ -73,7 +72,7 @@ function cargarViajes(){
 
             <div class="camposAgregarTarea">
                 <input type="text" class="campoTarea" placeholder="Nombre de tarea">
-                <button class="boton" onclick="anadirTarea(${indice})">Agregar Tarea</button>
+                <button class="boton" onclick="anadirTarea(${indice})">Agregar</button>
             </div>
 
             <button class="boton eliminarViaje" onclick="eliminarViaje(${indice})">Eliminar Viaje</button>
@@ -104,3 +103,11 @@ function anadirTarea(indice){
 
     cargarViajes();
 }
+
+function eliminarTarea(indice, indexTarea){
+    let objetoViaje = viajes[indice];
+    objetoViaje.listaTareas.splice(indexTarea, 1);
+    cargarViajes();
+}
+
+//Se adjunta link al proyecto en el que se hace uso de estructuras de datos, métodos de cadenas, uso de promesas, programación Orientada a Objetos, funciones anónimas (fujnciones flecha), uso de forEach para el recorrido de arreglos y uso de eventos (evento onclick).

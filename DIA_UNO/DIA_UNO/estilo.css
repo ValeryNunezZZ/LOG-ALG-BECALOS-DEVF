@@ -13,12 +13,17 @@
     justify-content: center;
 }
 
+body{
+    background-color: rgb(50, 0, 69);
+}
+
 main{
     flex-direction: column;
 
     background-color: rgb(50, 0, 69);
 
     width: 100%;
+    min-height: 100vh;
 }
 
 .main_container, .second_container{
@@ -151,6 +156,11 @@ li{
     background-color: rgb(254, 231, 255);
 
     border-radius: 5px;
+}
+
+h1{
+    color: plum;
+    margin-top: 30px;
 }
 
 h2{
