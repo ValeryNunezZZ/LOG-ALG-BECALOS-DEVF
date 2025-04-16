@@ -10,6 +10,11 @@ document.querySelector(".agregar").addEventListener("click", ()=>{
         return;
     }
 
+    if(listaDeCompras.has(entrada)){
+        alert("Ese elementos ya ha sido agregado :)");
+        return;
+    }
+
     listaDeCompras.add(entrada);
     mostrarLista();
 });
@@ -31,17 +36,18 @@ function mostrarLista(){
 
     if(listaDeCompras.size == 0){
         elementosContainer.innerHTML = "<li class='sinElementos'>Sin elementos en la lista</li>";
-
         return;
     }
 
-    let container;
+
+    let container = "";
 
     listaDeCompras.forEach(e => {
         container += `<li>${e}</li>`;
         console.log(e);
     });
 
+    elementosContainer.innerHTML = "";
     elementosContainer.innerHTML = container;
 }
 
