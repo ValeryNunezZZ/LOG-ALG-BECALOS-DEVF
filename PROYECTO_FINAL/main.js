@@ -143,17 +143,6 @@ function actualizarSugerenciasRecientes() {
     }
 
     recentSuggestionsUl.innerHTML = conjuntoItems;
-
-    /*ventana.forEach((receta) => {
-        const card = document.createElement("div");
-        card.className = "recipe-card";
-        card.innerHTML = `
-        <img src="${receta.imagen}" alt="${receta.nombre}" />
-        <h3>${receta.nombre}</h3>
-        <p><strong>Tiempo:</strong> ${receta.tiempo} min</p>
-        <p>${receta.pasos}</p>`;
-        recipesContainer.appendChild(card);
-    });*/
 }
 
 // =============================================
@@ -210,8 +199,8 @@ function mergeSort(lista, tipo){
 
     let mid = Math.floor(lista.length/2);
 
-    let izq = mergeSort(lista.slice(0,mid));
-    let der = mergeSort(lista.slice(mid));
+    let izq = mergeSort(lista.slice(0,mid), tipo);
+    let der = mergeSort(lista.slice(mid), tipo);
 
     
     if(tipo == 0) return mergeCadena(izq, der);
@@ -269,13 +258,12 @@ function ordenarRecetas(tipo) {
         // TODO: Reemplazar .sort() por una implementación manual de Merge Sort (crear función mergeSort())
 
         arregloOrdenadas = mergeSort(ordenadas, 1);
-        console.log(arregloOrdenadas);
+
         //ordenadas.sort((a, b) => a.tiempo - b.tiempo);
     } else {
         // TODO: Reemplazar .sort() por una implementación manual de ordenamiento alfabético (merge sort)
         
         arregloOrdenadas = mergeSort(ordenadas, 0);
-        console.log(arregloOrdenadas);
 
         //ordenadas.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
@@ -283,39 +271,6 @@ function ordenarRecetas(tipo) {
     renderRecetas(arregloOrdenadas);
 }
 
-/*function mergeSort(lista){
-    
-    if(lista.length <= 1){
-        return lista;
-    }
-
-    let mid = Math.floor(lista.length/2);
-
-    let izq = mergeSort(lista.slice(0,mid));
-    //puede que esté mal
-    let der = mergeSort(lista.slice(mid+1, lista.length));
-
-    return merge(izq, der);
-}
-
-function merge(izq, der){
-    let i=0, j=0;
-
-    let res = [];
-
-    while(i<izq.length && j<der.length){
-        if(izq[i]>=der[j]){
-            res.push(izq[i]);
-            i++;
-        }else{
-            res.push(der[j]);
-            j++;
-        }
-    }
-
-    return res.concat(izq.slice(i)).concat(der.slice(j));
-}
-*/
 // =============================================
 // FUNCIÓN: Resaltar sugerencia seleccionada
 // =============================================
@@ -378,8 +333,24 @@ sortSelect.addEventListener("change", (e) => ordenarRecetas(e.target.value));
 // =============================================
 suggestionBtn.addEventListener("click", () => {
     // TODO: Reemplazar .reduce() con una implementación manual de Greedy para encontrar el menor tiempo
-    const recetaMasRapida = recetas.reduce((a, b) => a.tiempo < b.tiempo ? a : b);
-    renderRecetas([recetaMasRapida]);
+
+
+    let resMinTime = [];
+    let minTime = 10000;
+
+    for(let i=0 ; i<recetas.length ; i++){
+        if(recetas[i].tiempo < minTime){
+            minTime = recetas[i].tiempo;
+            resMinTime = [];
+            resMinTime.push(recetas[i]);
+        }else if(recetas[i].tiempo == minTime){
+            resMinTime.push(recetas[i]);
+        }
+    }
+
+    //const recetaMasRapida = recetas.reduce((a, b) => a.tiempo < b.tiempo ? a : b);
+
+    renderRecetas(resMinTime);
 });
 
 

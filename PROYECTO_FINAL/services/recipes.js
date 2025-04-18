@@ -30,6 +30,45 @@ export const getRecipes = () => [
         categoria: "Bebida",
         tiempo: 5,
         imagen: "https://scitechdaily.com/images/Banana-Smoothie.jpg"
+    },
+    {
+        nombre: "Sopa de lentejas",
+        ingredientes: ["lentejas", "zanahoria", "cebolla", "apio", "ajo", "caldo de verduras"],
+        pasos: "Cocina las verduras, añade las lentejas y el caldo. Hierve hasta que las lentejas estén tiernas.",
+        categoria: "Sopa",
+        tiempo: 40,
+        imagen: "https://www.recetasnestle.com.ec/sites/default/files/srh_recipes/9760d14b5f05469a54af8574ec9f7018.png"
+    },
+    {
+        nombre: "Tostadas de aguacate",
+        ingredientes: ["pan integral", "aguacate", "limón", "sal", "pimienta", "chile en hojuelas"],
+        pasos: "Tuesta el pan, aplasta el aguacate encima, agrega limón, sal, pimienta y chile.",
+        categoria: "Desayuno",
+        tiempo: 5,
+        imagen: "https://content.cuerpomente.com/medio/2021/09/30/tostada-aguacate-hummus-rabanitos_209d7b5f_1200x1200.jpg"
+    },
+    {
+        nombre: "Pasta al pesto",
+        ingredientes: ["pasta", "albahaca", "piñones", "ajo", "queso parmesano", "aceite de oliva"],
+        pasos: "Cocina la pasta. Licúa los ingredientes del pesto y mezcla todo junto.",
+        categoria: "Plato principal",
+        tiempo: 20,
+        imagen: "https://www.paulinacocina.net/wp-content/uploads/2023/06/receta-pasta-al-pesto-1200x675.jpg"
+    },
+    {
+        nombre: "Galletas de avena y pasas",
+        ingredientes: ["avena", "harina", "azúcar", "huevo", "mantequilla", "pasas", "canela"],
+        pasos: "Mezcla los ingredientes, forma bolitas y hornéalas por 12 minutos.",
+        categoria: "Postre",
+        tiempo: 25,
+        imagen: "https://mojo.generalmills.com/api/public/content/DghZOSz42kCwArruP2Z_IA_gmi_hi_res_jpeg.jpeg?v=82b033ff&t=16e3ce250f244648bef28c5949fb99ff"
+    },{
+        nombre: "Tacos de pescado",
+        ingredientes: ["filete de pescado", "tortillas de maíz", "repollo", "crema", "limón", "salsa picante"],
+        pasos: "Cocina el pescado a la plancha con sal y pimienta. Coloca en las tortillas con repollo, crema, unas gotas de limón y salsa al gusto.",
+        categoria: "Plato principal",
+        tiempo: 15,
+        imagen: "https://veggiefestchicago.org/wp-content/uploads/2023/04/Fish-Tacos.jpg"
     }
     //Agrega mas recetas aqui
 ];
