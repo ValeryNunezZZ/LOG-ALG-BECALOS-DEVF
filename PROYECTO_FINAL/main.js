@@ -197,6 +197,65 @@ function buscarYRenderizar() {
     renderRecetas(resultados);
 }
 
+/*
+TIPO:
+    cadena => 0
+    numero => 1
+*/
+function mergeSort(lista, tipo){
+    
+    if(lista.length <= 1){
+        return lista;
+    }
+
+    let mid = Math.floor(lista.length/2);
+
+    let izq = mergeSort(lista.slice(0,mid));
+    let der = mergeSort(lista.slice(mid));
+
+    
+    if(tipo == 0) return mergeCadena(izq, der);
+    
+    return mergeNumero(izq, der);
+}
+
+function mergeCadena(izq, der){
+    
+    let i=0, j=0;
+
+    let res = [];
+
+    while(i<izq.length && j<der.length){
+        if(izq[i].nombre.localeCompare(der[j].nombre) < 0){
+            res.push(izq[i]);
+            i++;
+        }else{
+            res.push(der[j]);
+            j++;
+        }
+    }
+
+    return res.concat(izq.slice(i)).concat(der.slice(j));
+}
+
+function mergeNumero(izq, der){
+
+    let i=0, j=0;
+
+    let res = [];
+
+    while(i<izq.length && j<der.length){
+        if(izq[i].tiempo >= der[j].tiempo){
+            res.push(der[j]);
+            j++;
+        }else{
+            res.push(izq[i]);
+            i++;
+        }
+    }
+
+    return res.concat(izq.slice(i)).concat(der.slice(j));
+}
 
 // =============================================
 // FUNCIÓN: Ordenar recetas por nombre o tiempo
@@ -204,21 +263,24 @@ function buscarYRenderizar() {
 function ordenarRecetas(tipo) {
     let ordenadas = [...recetas];
     //console.log(ordenadas)
+    let arregloOrdenadas = [];
 
     if (tipo === "time") {
         // TODO: Reemplazar .sort() por una implementación manual de Merge Sort (crear función mergeSort())
 
-        let arregloXTiempos = [];
-
-        
-
-        ordenadas.sort((a, b) => a.tiempo - b.tiempo);
+        arregloOrdenadas = mergeSort(ordenadas, 1);
+        console.log(arregloOrdenadas);
+        //ordenadas.sort((a, b) => a.tiempo - b.tiempo);
     } else {
         // TODO: Reemplazar .sort() por una implementación manual de ordenamiento alfabético (merge sort)
-        ordenadas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        
+        arregloOrdenadas = mergeSort(ordenadas, 0);
+        console.log(arregloOrdenadas);
+
+        //ordenadas.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
 
-    renderRecetas(ordenadas);
+    renderRecetas(arregloOrdenadas);
 }
 
 /*function mergeSort(lista){
@@ -327,39 +389,3 @@ suggestionBtn.addEventListener("click", () => {
 renderRecetas(recetas);
 
 
-function mergeSort(lista){
-    
-    if(lista.length <= 1){
-        return lista;
-    }
-
-    let mid = Math.floor(lista.length/2);
-
-    let izq = mergeSort(lista.slice(0,mid));
-    //puede que esté mal
-    let der = mergeSort(lista.slice(mid));
-
-    return merge(izq, der);
-}
-
-function merge(izq, der){
-    let i=0, j=0;
-
-    let res = [];
-
-    while(i<izq.length && j<der.length){
-        if(izq[i]>=der[j]){
-            res.push(der[j]);
-            j++;
-        }else{
-            res.push(izq[i]);
-            i++;
-        }
-    }
-
-    return res.concat(izq.slice(i)).concat(der.slice(j));
-}
-
-let lista = [2,4,7,9,4,6,8,9,2];
-
-console.log(mergeSort(lista));
