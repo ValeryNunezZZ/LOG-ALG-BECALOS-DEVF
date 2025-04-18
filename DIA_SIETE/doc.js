@@ -42,17 +42,17 @@ function conquer(izq, der){
 
 document.querySelector(".buscar").addEventListener("click", ()=>{
     
-    let lista = document.querySelector(".inputLista").value;
+    let lista = document.querySelector(".inputLista");
     let span = document.querySelector(".span");
     let div = document.querySelector(".res");
 
-    let listaArreglo = lista.split(",").map(e=>e.trim()).map(Number);
+    let listaArreglo = lista.value.split(",").map(e=>e.trim()).map(Number);
 
     div.classList.add("animate__tada");
     
     let maxNum = encontrarElMaximo(listaArreglo);
     span.innerHTML = maxNum;
-    lista = "";
+    lista.value = "";
 })
 
 document.querySelector(".inputLista").addEventListener("click", ()=>{
