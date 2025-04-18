@@ -26,7 +26,10 @@ function renderRecetas(lista) {
         const card = document.createElement("div");
         card.className = "recipe-card";
         card.innerHTML = `
-        <img src="${receta.imagen}" alt="${receta.nombre}" />
+        <div class="img">
+            <img src="${receta.imagen}" alt="${receta.nombre}"/>
+        </div>
+
         <h3>${receta.nombre}</h3>
         <p><strong>Tiempo:</strong> ${receta.tiempo} min</p>
         <p>${receta.pasos}</p>`;
