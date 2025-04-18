@@ -98,8 +98,6 @@ function actualizarHistorial(ingrediente) {
         }
     })
 
-    console.log(historialIngredientes);
-
     // Sliding Window: mantenemos máximo 20 ingredientes
     if (historialIngredientes.size > 20) {
         const primerElemento = historialIngredientes.values().next().value;
@@ -205,9 +203,15 @@ function buscarYRenderizar() {
 // =============================================
 function ordenarRecetas(tipo) {
     let ordenadas = [...recetas];
+    //console.log(ordenadas)
 
     if (tipo === "time") {
         // TODO: Reemplazar .sort() por una implementación manual de Merge Sort (crear función mergeSort())
+
+        let arregloXTiempos = [];
+
+        
+
         ordenadas.sort((a, b) => a.tiempo - b.tiempo);
     } else {
         // TODO: Reemplazar .sort() por una implementación manual de ordenamiento alfabético (merge sort)
@@ -217,7 +221,39 @@ function ordenarRecetas(tipo) {
     renderRecetas(ordenadas);
 }
 
+/*function mergeSort(lista){
+    
+    if(lista.length <= 1){
+        return lista;
+    }
 
+    let mid = Math.floor(lista.length/2);
+
+    let izq = mergeSort(lista.slice(0,mid));
+    //puede que esté mal
+    let der = mergeSort(lista.slice(mid+1, lista.length));
+
+    return merge(izq, der);
+}
+
+function merge(izq, der){
+    let i=0, j=0;
+
+    let res = [];
+
+    while(i<izq.length && j<der.length){
+        if(izq[i]>=der[j]){
+            res.push(izq[i]);
+            i++;
+        }else{
+            res.push(der[j]);
+            j++;
+        }
+    }
+
+    return res.concat(izq.slice(i)).concat(der.slice(j));
+}
+*/
 // =============================================
 // FUNCIÓN: Resaltar sugerencia seleccionada
 // =============================================
@@ -289,3 +325,41 @@ suggestionBtn.addEventListener("click", () => {
 // Render inicial de todas las recetas
 // =============================================
 renderRecetas(recetas);
+
+
+function mergeSort(lista){
+    
+    if(lista.length <= 1){
+        return lista;
+    }
+
+    let mid = Math.floor(lista.length/2);
+
+    let izq = mergeSort(lista.slice(0,mid));
+    //puede que esté mal
+    let der = mergeSort(lista.slice(mid));
+
+    return merge(izq, der);
+}
+
+function merge(izq, der){
+    let i=0, j=0;
+
+    let res = [];
+
+    while(i<izq.length && j<der.length){
+        if(izq[i]>=der[j]){
+            res.push(der[j]);
+            j++;
+        }else{
+            res.push(izq[i]);
+            i++;
+        }
+    }
+
+    return res.concat(izq.slice(i)).concat(der.slice(j));
+}
+
+let lista = [2,4,7,9,4,6,8,9,2];
+
+console.log(mergeSort(lista));
