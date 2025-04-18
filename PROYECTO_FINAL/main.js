@@ -13,7 +13,7 @@ const suggestionBtn = document.getElementById("suggestion-btn");
 // Variables globales para autocompletado y análisis
 let currentSuggestionIndex = -1;
 let currentSuggestions = [];
-let historialIngredientes = [];
+let historialIngredientes = new Set;
 
 
 // =============================================
@@ -53,7 +53,7 @@ function filtrarPorIngrediente(ingrediente) {
     let arregloDeIngredientes = [];
 
     recetas.forEach((receta) => {
-        console.log(receta.ingredientes.length)
+        
         for(let i=0 ; i<receta.ingredientes.length ; i++){
 
             let ingredienteActual = receta.ingredientes[i].toLowerCase();
@@ -76,7 +76,6 @@ function filtrarPorIngrediente(ingrediente) {
                 }
             }
 
-            console.log("word = "+palabraLograda)
             if(palabraLograda == lower){
                 arregloDeIngredientes.push(receta);
                 break;
@@ -92,16 +91,24 @@ function filtrarPorIngrediente(ingrediente) {
 // FUNCIÓN: Actualizar historial y análisis
 // =============================================
 function actualizarHistorial(ingrediente) {
-    historialIngredientes.push(ingrediente);
+    //primero verificar que el ingrediente exista
+    recetas.forEach((receta)=>{
+        if(receta.ingredientes.includes(ingrediente)){
+            historialIngredientes.add(ingrediente);
+        }
+    })
+
+    console.log(historialIngredientes);
 
     // Sliding Window: mantenemos máximo 20 ingredientes
-    if (historialIngredientes.length > 20) {
-        historialIngredientes.shift();
+    if (historialIngredientes.size > 20) {
+        const primerElemento = historialIngredientes.values().next().value;
+        historialIngredientes.delete(primerElemento);
     }
 
     // Mostrar en texto cuántos ingredientes únicos se han usado
     document.getElementById("analysis").textContent =
-        `Usaste ${new Set(historialIngredientes).size} ingrediente${historialIngredientes.length > 1 ? 's' : ''} esta semana.`;
+        `Usaste ${historialIngredientes.size} ingrediente${historialIngredientes.length > 1 ? 's' : ''} esta semana.`;
 
     actualizarSugerenciasRecientes();
 }
@@ -112,11 +119,44 @@ function actualizarHistorial(ingrediente) {
 // =============================================
 
 // TODO: Sliding Window sobre últimas 5 búsquedas para encontrar ingredientes más frecuentes
+
 function actualizarSugerenciasRecientes() {
+    //Será una ventana de tamaño 3 (1 o 2 para un array menor a 3)
 
+    let ventana;
+    if(historialIngredientes.size == 1){
+        ventana = Array.from(historialIngredientes).slice(-1);
+    }else if(historialIngredientes.size == 2){
+        ventana = Array.from(historialIngredientes).slice(-2);
+    }else{
+        ventana = Array.from(historialIngredientes).slice(-5);
+    }
+
+    let recentSuggestionsUl = document.getElementById("recent-suggestions");
+
+    recentSuggestionsUl.innerHTML = ""; // Limpiamos el contenedor
+
+    let conjuntoItems = "";
+
+    for(let i=0 ; i<ventana.length ; i++){
+        conjuntoItems += `
+        <li>${ventana[i]}</li>
+        `
+    }
+
+    recentSuggestionsUl.innerHTML = conjuntoItems;
+
+    /*ventana.forEach((receta) => {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.innerHTML = `
+        <img src="${receta.imagen}" alt="${receta.nombre}" />
+        <h3>${receta.nombre}</h3>
+        <p><strong>Tiempo:</strong> ${receta.tiempo} min</p>
+        <p>${receta.pasos}</p>`;
+        recipesContainer.appendChild(card);
+    });*/
 }
-
-
 
 // =============================================
 // FUNCIÓN: Mostrar sugerencias de autocompletado
