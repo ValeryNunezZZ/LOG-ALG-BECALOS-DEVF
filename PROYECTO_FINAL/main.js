@@ -263,12 +263,18 @@ function ordenarRecetas(tipo) {
         arregloOrdenadas = mergeSort(ordenadas, 1);
 
         //ordenadas.sort((a, b) => a.tiempo - b.tiempo);
-    } else {
+    } else if (tipo === "name"){
         // TODO: Reemplazar .sort() por una implementación manual de ordenamiento alfabético (merge sort)
         
         arregloOrdenadas = mergeSort(ordenadas, 0);
 
         //ordenadas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }else{
+        ordenadas.forEach((elemento)=>{
+            if(elemento.categoria.replace(" ","").toLowerCase() === tipo){
+                arregloOrdenadas.push(elemento);
+            }
+        })
     }
 
     renderRecetas(arregloOrdenadas);
@@ -356,6 +362,35 @@ suggestionBtn.addEventListener("click", () => {
     renderRecetas(resMinTime);
 });
 
+/*
+<section id="categories">
+<!-- DFS/BFS tree de categorías -->
+</section>
+*/
+
+function agregarCategorias(){
+    //sortSelect
+
+    let opciones = "";
+
+    let opcionesSet = new Set();
+
+    recetas.forEach((elemento)=>{
+        opcionesSet.add(elemento.categoria);
+    })
+
+    opcionesSet.forEach((elemento)=>{
+        //console.log(elemento.categoria.replace(" ","").toLowerCase());
+        opciones += `
+            <option value="${elemento.replace(" ","").toLowerCase()}">${elemento}</option>
+        `;
+    })
+
+    sortSelect.innerHTML += opciones;
+}
+
+
+agregarCategorias();
 
 // =============================================
 // Render inicial de todas las recetas
